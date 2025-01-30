@@ -45,11 +45,14 @@ async def all_recipies() -> list[schemas.FirstWindow]:
     status_code=200,
     response_model=schemas.SecondWindow,
     summary="Рецепт по id",
-    description="Этот эндпоинт возвращает информацию для одного рецепта по его id",
+    description="""Этот эндпоинт возвращает информацию для одного рецепта
+    по его id""",
 )
 async def recipy_by_id(recipy_id: int) -> schemas.SecondWindow:
     async with async_session() as session:
-        res = select(models.Recipy).filter(models.Recipy.recipy_id == recipy_id)
+        res = select(models.Recipy).filter(
+            models.Recipy.recipy_id == recipy_id
+        )
         result = await session.execute(res)
         recipy = result.scalar_one_or_none()
 
