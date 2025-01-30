@@ -50,9 +50,7 @@ async def all_recipies() -> list[schemas.FirstWindow]:
 )
 async def recipy_by_id(recipy_id: int) -> schemas.SecondWindow:
     async with async_session() as session:
-        res = select(models.Recipy).filter(
-            models.Recipy.recipy_id == recipy_id
-        )
+        res = select(models.Recipy).filter(models.Recipy.recipy_id == recipy_id)
         result = await session.execute(res)
         recipy = result.scalar_one_or_none()
 
