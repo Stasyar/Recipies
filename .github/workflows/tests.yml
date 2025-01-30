@@ -37,7 +37,7 @@ jobs:
         run: flake8 .
 
       - name: Run isort --check
-        run: isort --check-only --profile black.
+        run: isort --check-only --profile black .
 
       - name: Run mypy
         run: mypy .
