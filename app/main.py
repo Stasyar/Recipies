@@ -22,25 +22,31 @@ async def shutdown():
         await engine.dispose()
 
 
-@app.get('/all_recipies/',
-         status_code=200,
-         response_model=list[schemas.FirstWindow],
-         summary="Все рецепты",
-         description="Этот эндпоинт возвращает список всех рецептов в базе данных")
+@app.get(
+    "/all_recipies/",
+    status_code=200,
+    response_model=list[schemas.FirstWindow],
+    summary="Все рецепты",
+    description="Этот эндпоинт возвращает список всех рецептов в базе данных",
+)
 async def all_recipies() -> list[schemas.FirstWindow]:
     async with async_session() as session:
-        res = select(models.Recipy).order_by(desc(models.Recipy.views), asc(models.Recipy.cooking_time))
+        res = select(models.Recipy).order_by(
+            desc(models.Recipy.views), asc(models.Recipy.cooking_time)
+        )
         result = await session.execute(res)
         recipies = result.scalars().all()
         print(f"'/all_recipies': {recipies}")
         return [schemas.FirstWindow.from_orm(recipy) for recipy in recipies]
 
 
-@app.get('/recipy/{recipy_id}',
-         status_code=200,
-         response_model=schemas.SecondWindow,
-         summary="Рецепт по id",
-         description="Этот эндпоинт возвращает информацию для одного рецепта по его id")
+@app.get(
+    "/recipy/{recipy_id}",
+    status_code=200,
+    response_model=schemas.SecondWindow,
+    summary="Рецепт по id",
+    description="Этот эндпоинт возвращает информацию для одного рецепта по его id",
+)
 async def recipy_by_id(recipy_id: int) -> schemas.SecondWindow:
     async with async_session() as session:
         res = select(models.Recipy).filter(models.Recipy.recipy_id == recipy_id)
@@ -56,18 +62,20 @@ async def recipy_by_id(recipy_id: int) -> schemas.SecondWindow:
         return schemas.SecondWindow.from_orm(recipy)
 
 
-@app.post("/add_recipy/",
-          status_code=201,
-          response_model=schemas.RecipyIn,
-          summary="Добавить новый рецепт",
-          description="Этот эндпоинт добавляет новый рецепт в базу данных")
+@app.post(
+    "/add_recipy/",
+    status_code=201,
+    response_model=schemas.RecipyIn,
+    summary="Добавить новый рецепт",
+    description="Этот эндпоинт добавляет новый рецепт в базу данных",
+)
 async def create_recipy(recipy: schemas.RecipyIn) -> schemas.RecipyIn:
     async with async_session() as session:
         new_recipy = models.Recipy(
             name=recipy.name,
             cooking_time=recipy.cooking_time,
             ingredients=recipy.ingredients,
-            description=recipy.description
+            description=recipy.description,
         )
 
         session.add(new_recipy)
