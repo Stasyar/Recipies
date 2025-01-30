@@ -28,6 +28,3 @@ class RecipyIn(BaseRecipy):
 
     class Config:
         from_attributes = True
-
-
-
