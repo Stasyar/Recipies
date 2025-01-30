@@ -22,7 +22,7 @@ def test_all_recipies(test_db):
         "cooking_time": 30,
         "ingredients": "pastaa",
         "description": "good",
-        "views": 0
+        "views": 0,
     }
 
     response = client.post("/add_recipy/", json=recipy_data)
