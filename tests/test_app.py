@@ -1,17 +1,17 @@
 import pytest
 from fastapi.testclient import TestClient
 
-from app.database import async_session, engine
+from app.database import async_session
 from app.main import app
-
 client = TestClient(app)
 
 TestingSessionLocal = async_session
 
 
 @pytest.fixture(scope="module")
-def test_db():
-    yield TestingSessionLocal()
+async def test_db():
+    async with TestingSessionLocal() as session:
+        yield session
 
 
 def test_all_recipies(test_db):
