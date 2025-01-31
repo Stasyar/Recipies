@@ -3,6 +3,7 @@ from fastapi.testclient import TestClient
 
 from app.database import async_session
 from app.main import app
+
 client = TestClient(app)
 
 TestingSessionLocal = async_session
