@@ -1,17 +1,11 @@
 import pytest
-from database import engine
+from app.database import engine, async_session
 from fastapi.testclient import TestClient
-from main import app
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.orm import sessionmaker
+from app.main import app
 
 client = TestClient(app)
 
-TestingSessionLocal = sessionmaker(
-    bind=engine,
-    class_=AsyncSession,
-    expire_on_commit=False,
-)
+TestingSessionLocal = async_session
 
 
 @pytest.fixture(scope="module")

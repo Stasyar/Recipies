@@ -1,8 +1,8 @@
-import models
-import schemas
-from database import async_session, engine
+from app import models
+from app import schemas
+from app.database import async_session, engine
 from fastapi import FastAPI, HTTPException
-from sqlalchemy import asc, desc
+from sqlalchemy import asc, desc, update
 from sqlalchemy.future import select
 
 app = FastAPI()
@@ -56,7 +56,12 @@ async def recipy_by_id(recipy_id: int) -> schemas.SecondWindow:
         if recipy is None:
             raise HTTPException(status_code=404, detail="Recipy not found")
 
-        recipy.views += 1
+        stmt = (
+            update(models.Recipy)
+            .where(models.Recipy.recipy_id == 1)
+            .values(views=models.Recipy.views + 1)
+        )
+        await session.execute(stmt)
         await session.commit()
 
         return schemas.SecondWindow.from_orm(recipy)
