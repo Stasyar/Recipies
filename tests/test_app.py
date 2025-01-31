@@ -15,7 +15,8 @@ async def test_db():
         yield session
 
 
-def test_all_recipies(test_db):
+@pytest.mark.asyncio
+async def test_all_recipies(test_db):
 
     recipy_data = {
         "name": "Паста с соусом",
