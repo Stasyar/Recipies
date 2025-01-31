@@ -1,6 +1,7 @@
 import pytest
-from app.database import engine, async_session
 from fastapi.testclient import TestClient
+
+from app.database import async_session, engine
 from app.main import app
 
 client = TestClient(app)

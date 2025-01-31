@@ -1,9 +1,9 @@
-from app import models
-from app import schemas
-from app.database import async_session, engine
 from fastapi import FastAPI, HTTPException
 from sqlalchemy import asc, desc, update
 from sqlalchemy.future import select
+
+from app import models, schemas
+from app.database import async_session, engine
 
 app = FastAPI()
 
