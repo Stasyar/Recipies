@@ -34,6 +34,10 @@ jobs:
       - name: Run black formatting check
         run: black --check .
 
+        
+      - name: Run isort check
+        run: isort --check --profile black .
+
       - name: Run flake8 linting
         run: flake8 .
 
