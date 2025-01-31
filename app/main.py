@@ -1,10 +1,9 @@
-from fastapi import FastAPI, HTTPException
-from sqlalchemy import asc, desc
-from sqlalchemy.future import select
-
 import models
 import schemas
 from database import async_session, engine
+from fastapi import FastAPI, HTTPException
+from sqlalchemy import asc, desc
+from sqlalchemy.future import select
 
 app = FastAPI()
 
